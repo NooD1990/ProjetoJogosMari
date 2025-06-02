@@ -1,55 +1,128 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 
-public class PlayerGrunt : MonoBehaviour
+public class Player : MonoBehaviour
 {
-    public float Speed;
-    public float RotSpeed;
-    private float Rotation;
-    public float Gravity;
+    private CharacterController controller;
+    private Animator anim;
 
-    Vector3 MoveDirection;
-    CharacterController controller;
-    Animator anim;
+    public float speed = 5f;
+    public float jumpForce = 8f;
+    public float gravity = -9.81f;
+    private float verticalVelocity;
 
+    public Transform cameraTransform;         // Câmera externa (terceira pessoa)
+    public float mouseSensitivity = 2f;
+    private float xRotation = 0f;
 
-    // Start is called before the first frame update
+    public Vector3 cameraOffset = new Vector3(0f, 2f, -4f); // Posição da câmera em terceira pessoa
+    public float cameraSmoothSpeed = 10f;
+
+    private bool isAttacking = false;
+
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        anim = GetComponent<Animator>();
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        // Inicializa a posição da câmera
+        UpdateCameraPosition(true);
     }
 
-    // Update is called once per frame
     void Update()
     {
+        HandleMouseLook();
         Move();
+        HandleJump();
+        HandleAttack();
+        ApplyGravity();
+        UpdateCameraPosition(false);
     }
 
     void Move()
     {
-        if (controller.isGrounded)
+        float moveX = Input.GetAxis("Horizontal");
+        float moveZ = Input.GetAxis("Vertical");
+
+        Vector3 move = transform.right * moveX + transform.forward * moveZ;
+
+        if (move != Vector3.zero && controller.isGrounded)
         {
-
-            if (Input.GetKey(KeyCode.W))
-            {
-                MoveDirection = Vector3.forward * Speed;
-
-            }
-            if (Input.GetKeyUp(KeyCode.W))
-            {
-                MoveDirection = Vector3.zero;
-                //transform.Translate(Vector3.back * Velocity * Time.deltaTime);
-            }
+            controller.Move(move * speed * Time.deltaTime);
+            anim.SetBool("isWalking", true);
         }
-        Rotation += Input.GetAxis("Horizontal") * RotSpeed * Time.deltaTime;
-        transform.eulerAngles = new Vector3(0, Rotation, 0);
-
-        MoveDirection.y -= Gravity * Time.deltaTime;
-        MoveDirection = transform.TransformDirection(MoveDirection);
-        controller.Move(MoveDirection * Time.deltaTime);
+        else
+        {
+            anim.SetBool("isWalking", false);
+        }
     }
 
+    void HandleJump()
+    {
+        if (controller.isGrounded && verticalVelocity < 0)
+        {
+            verticalVelocity = -2f;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) && controller.isGrounded)
+        {
+            verticalVelocity = jumpForce;
+            anim.SetTrigger("jump");
+        }
+    }
+
+    void ApplyGravity()
+    {
+        verticalVelocity += gravity * Time.deltaTime;
+        Vector3 gravityMove = Vector3.up * verticalVelocity;
+        controller.Move(gravityMove * Time.deltaTime);
+    }
+
+    void HandleAttack()
+    {
+        if (Input.GetButtonDown("Fire1") && !isAttacking)
+        {
+            isAttacking = true;
+            anim.SetTrigger("attack");
+        }
+    }
+
+    public void EndAttack()
+    {
+        isAttacking = false;
+    }
+
+    void HandleMouseLook()
+    {
+        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
+        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
+
+        transform.Rotate(Vector3.up * mouseX);
+
+        xRotation -= mouseY;
+        xRotation = Mathf.Clamp(xRotation, -40f, 60f);
+    }
+
+    void UpdateCameraPosition(bool instant)
+    {
+        // Calcula a rotação da câmera com base na rotação do player
+        Quaternion camRot = Quaternion.Euler(xRotation, transform.eulerAngles.y, 0f);
+
+        // Posição desejada da câmera com offset
+        Vector3 desiredPosition = transform.position + camRot * cameraOffset;
+
+        if (instant)
+        {
+            cameraTransform.position = desiredPosition;
+        }
+        else
+        {
+            cameraTransform.position = Vector3.Lerp(cameraTransform.position, desiredPosition, Time.deltaTime * cameraSmoothSpeed);
+        }
+
+        // A câmera sempre olha para o player
+        cameraTransform.LookAt(transform.position + Vector3.up * 1.5f);
+    }
 }
