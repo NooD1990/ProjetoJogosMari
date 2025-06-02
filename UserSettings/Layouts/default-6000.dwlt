@@ -69,8 +69,8 @@ MonoBehaviour:
     y: 0
     width: 275
     height: 669
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 76}
+  m_MaxSize: {x: 4001, y: 4026}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}
@@ -339,7 +339,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 509
+    y: 454
     width: 1090
     height: 213
   m_SerializedDataModeController:
@@ -383,21 +383,21 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 79}
     m_SelectedIDs: e6a80000
     m_LastClickedID: 43238
-    m_ExpandedIDs: 00000000dea80000e2a8000000ca9a3b
+    m_ExpandedIDs: 0000000048e70000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: Prefabs
-      m_OriginalName: Prefabs
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 43256
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_TrimLeadingAndTrailingWhitespace: 0
       m_ClientGUIView: {fileID: 5}
@@ -412,7 +412,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000dea8000000ca9a3b
+    m_ExpandedIDs: 0000000048e70000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -491,8 +491,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Inspector\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1091
-    y: 79
+    x: 1092
+    y: 24
     width: 274
     height: 643
   m_SerializedDataModeController:
@@ -541,7 +541,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 79
+    y: 24
     width: 211
     height: 404
   m_SerializedDataModeController:
@@ -558,23 +558,23 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 14000000
+      m_SelectedIDs: 
       m_LastClickedID: 0
       m_ExpandedIDs: 16d4fdffde91feff02e6feff5207ffff74290100
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: Capsule
-        m_OriginalName: Capsule
+        m_Name: 
+        m_OriginalName: 
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: -162150
+        m_UserData: 0
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 0
+        m_OriginalEventType: 11
         m_IsRenamingFilename: 0
         m_TrimLeadingAndTrailingWhitespace: 0
         m_ClientGUIView: {fileID: 4}
@@ -606,8 +606,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Scene\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 212
-    y: 79
+    x: 213
+    y: 24
     width: 877
     height: 404
   m_SerializedDataModeController:
@@ -1178,7 +1178,7 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: -295.29724, y: -128.1175, z: -145.96481}
+    m_Target: {x: 237.69261, y: 0.784318, z: 85.68244}
     speed: 2
     m_Value: {x: -295.29724, y: -128.1175, z: -145.96481}
   m_RenderMode: 0
@@ -1226,13 +1226,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.05424247, y: -0.81513107, z: 0.07719939, w: 0.5714118}
+    m_Target: {x: 0.34473556, y: -0.23784268, z: 0.09065581, w: 0.90345603}
     speed: 2
-    m_Value: {x: 0.05167389, y: -0.8155305, z: 0.07353633, w: 0.5716924}
+    m_Value: {x: -0.05424648, y: 0.8151914, z: -0.07720509, w: -0.57145405}
   m_Size:
-    m_Target: 440.2412
+    m_Target: 1.3902158
     speed: 2
-    m_Value: 421.28345
+    m_Value: 440.2412
   m_Ortho:
     m_Target: 0
     speed: 2
