@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;  // Para recarregar cena ou trocar de cena
+using UnityEngine.SceneManagement;
 
 public class EnemyPatrol : MonoBehaviour
 {
@@ -11,16 +11,27 @@ public class EnemyPatrol : MonoBehaviour
     public Transform player;
     public Animator animator;
 
+    public GameObject gameOverPanel;  // Arraste o painel Game Over no Inspector
+
     private Vector3 targetPoint;
     private bool goingToPointB = true;
+    private bool isGameOver = false;
 
     void Start()
     {
         targetPoint = pointB.position;
+        gameOverPanel.SetActive(false);
+        Time.timeScale = 1f;
+
+        // Trava e esconde o cursor durante o jogo
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     void Update()
     {
+        if (isGameOver) return;
+
         Patrol();
         CheckPlayerInVision();
     }
@@ -46,6 +57,8 @@ public class EnemyPatrol : MonoBehaviour
 
     void CheckPlayerInVision()
     {
+        if (isGameOver) return;
+
         Vector3 directionToPlayer = player.position - transform.position;
         float distanceToPlayer = directionToPlayer.magnitude;
 
@@ -55,7 +68,6 @@ public class EnemyPatrol : MonoBehaviour
 
             if (angleToPlayer <= visionAngle / 2f)
             {
-                Debug.Log("Jogador foi visto! Game Over!");
                 GameOver();
             }
         }
@@ -63,12 +75,26 @@ public class EnemyPatrol : MonoBehaviour
 
     void GameOver()
     {
-        // Exemplo: reinicia a cena
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Debug.Log("Jogador foi visto! Game Over!");
+        isGameOver = true;
+        gameOverPanel.SetActive(true);
+        Time.timeScale = 0f;
 
-        // Se quiser, pode colocar outras ações aqui:
-        // - Abrir uma tela de "Você perdeu"
-        // - Parar o jogo
-        // - Mostrar uma animação de morte
+        // Liberar cursor para poder clicar no UI
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    public void RestartGame()
+    {
+        isGameOver = false;
+        gameOverPanel.SetActive(false);
+        Time.timeScale = 1f;
+
+        // Trava e esconde o cursor para voltar ao jogo
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
