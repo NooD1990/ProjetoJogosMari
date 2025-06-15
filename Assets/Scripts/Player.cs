@@ -4,17 +4,17 @@ public class Player : MonoBehaviour
 {
     private CharacterController controller;
     private Animator anim;
-
+    public bool hasSupply = false;
     public float speed = 5f;
     public float jumpForce = 8f;
     public float gravity = -9.81f;
     private float verticalVelocity;
 
-    public Transform cameraTransform;         // Câmera externa (terceira pessoa)
+    public Transform cameraTransform;         // Cï¿½mera externa (terceira pessoa)
     public float mouseSensitivity = 2f;
     private float xRotation = 0f;
 
-    public Vector3 cameraOffset = new Vector3(0f, 2f, -4f); // Posição da câmera em terceira pessoa
+    public Vector3 cameraOffset = new Vector3(0f, 2f, -4f); // Posiï¿½ï¿½o da cï¿½mera em terceira pessoa
     public float cameraSmoothSpeed = 10f;
 
     private bool isAttacking = false;
@@ -27,7 +27,7 @@ public class Player : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        // Inicializa a posição da câmera
+        // Inicializa a posiï¿½ï¿½o da cï¿½mera
         UpdateCameraPosition(true);
     }
 
@@ -107,10 +107,10 @@ public class Player : MonoBehaviour
 
     void UpdateCameraPosition(bool instant)
     {
-        // Calcula a rotação da câmera com base na rotação do player
+        // Calcula a rotaï¿½ï¿½o da cï¿½mera com base na rotaï¿½ï¿½o do player
         Quaternion camRot = Quaternion.Euler(xRotation, transform.eulerAngles.y, 0f);
 
-        // Posição desejada da câmera com offset
+        // Posiï¿½ï¿½o desejada da cï¿½mera com offset
         Vector3 desiredPosition = transform.position + camRot * cameraOffset;
 
         if (instant)
@@ -122,7 +122,7 @@ public class Player : MonoBehaviour
             cameraTransform.position = Vector3.Lerp(cameraTransform.position, desiredPosition, Time.deltaTime * cameraSmoothSpeed);
         }
 
-        // A câmera sempre olha para o player
+        // A cï¿½mera sempre olha para o player
         cameraTransform.LookAt(transform.position + Vector3.up * 1.5f);
     }
 }
